@@ -5,7 +5,28 @@ import com.BlackjackGame;
 
 public class BlackjackTest extends TestCase{
 
-	public void testPlayerBust()
+	public void testPlayerDraw()
+	{
+		BlackjackGame game = new BlackjackGame();
+		
+		game.player.drawCard("HK");
+		
+		assertEquals(10, game.player.score);
+		
+		game.player.drawCard("CA");
+		
+		assertEquals(21, game.player.score);
+		
+		game.player.clearHand();
+		
+		game.player.drawCard("HK");
+		game.player.drawCard("CK");
+		game.player.drawCard("CA");
+		
+		assertEquals(21, game.player.score);
+	}
+	
+	public void testBust()
 	{
 		BlackjackGame game = new BlackjackGame();
 		
@@ -18,11 +39,6 @@ public class BlackjackTest extends TestCase{
 		game.player.setScore(21);
 		
 		assertEquals(false, game.player.hasBusted());
-	}
-	
-	public void testDealerBust()
-	{
-		BlackjackGame game = new BlackjackGame();
 		
 		//Make the dealer bust
 		game.dealer.setScore(22);
@@ -32,10 +48,20 @@ public class BlackjackTest extends TestCase{
 		//Check to see if near bust's actually bust
 		game.dealer.setScore(21);
 		
-		assertEquals(true, game.dealer.hasBusted());
+		assertEquals(false, game.dealer.hasBusted());
 	}
 	
-	public void testPlayerBlackjack()
+	public void testNumCardsInHand()
+	{
+		BlackjackGame game = new BlackjackGame();
+		
+		game.player.drawCard("CA");
+		game.player.drawCard("HQ");
+		
+		assertEquals(2, game.player.hand.size());
+	}
+	
+	public void testBlackjack()
 	{
 		BlackjackGame game = new BlackjackGame();
 		
@@ -43,11 +69,13 @@ public class BlackjackTest extends TestCase{
 		game.player.drawCard("HQ");
 		
 		assertEquals(true, game.player.hasBlackjack());
-	}
-	
-	public void testDealerBlackjack()
-	{
-		BlackjackGame game = new BlackjackGame();
+		
+		game.player.clearHand();
+		
+		game.player.drawCard("CK");
+		game.player.drawCard("HQ");
+		
+		assertEquals(false, game.player.hasBlackjack());
 		
 		game.dealer.drawCard("CA");
 		game.dealer.drawCard("HQ");
@@ -66,6 +94,8 @@ public class BlackjackTest extends TestCase{
 		
 		game.dealer.drawCard("HQ");
 		game.dealer.drawCard("CA");
+		
+		game.isGameDone();
 		
 		assertEquals(true, game.gameOver == true && game.victor == DEALER);
 	}
