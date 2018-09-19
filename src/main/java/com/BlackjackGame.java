@@ -17,8 +17,8 @@ public class BlackjackGame {
 	//PLAYER is value 0
 	//DEALER is value 1
 	
-	public static int PLAYER = 0;
-	public static int DEALER = 1;
+	public int PLAYER = 0;
+	public int DEALER = 1;
 	
 	public Player player;
 	public Dealer dealer;
@@ -26,6 +26,7 @@ public class BlackjackGame {
 	public int victor;
 	
 	List<String> deck;
+	List<String> alreadyPlayedCards;
 	
 	public BlackjackGame()
 	{
