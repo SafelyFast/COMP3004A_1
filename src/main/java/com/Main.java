@@ -5,6 +5,9 @@ import com.BlackjackGame;
 
 public class Main {
 	
+	public static int PLAYER = 0;
+	public static int DEALER = 1;
+	
 	public static void main(String[] args)
 	{
 		BlackjackGame game = new BlackjackGame();
@@ -25,6 +28,6 @@ public class Main {
 		}
 		//once finished
 		reader.close();
-		System.out.println(game.deck.size());
+		System.out.println(DEALER);
 	}
 }

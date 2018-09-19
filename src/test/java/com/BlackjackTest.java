@@ -13,8 +13,8 @@ import com.BlackjackGame;
 
 public class BlackjackTest extends TestCase{
 	
-	int DEALER = 1;
-	int PLAYER = 0;
+	public static int PLAYER = 0;
+	public static int DEALER = 1;
 
 	public void testDraw()
 	{
