@@ -91,12 +91,7 @@ public class Dealer {
 			}
 		}
 		
-		if (hasAce && has10)
-		{
-			return true;
-		}
-		
-		return true;
+		return (hasAce && has10);
 	}
 	
 	public boolean hasSoft17()
@@ -105,7 +100,6 @@ public class Dealer {
 		
 		for(int i = 0; i < this.hand.size(); i++)
 		{
-			System.out.println(this.hand.get(i).substring(1));
 			if (this.hand.get(i).substring(1).equals("A"))
 			{
 				hasAce = true;
@@ -113,5 +107,15 @@ public class Dealer {
 		}
 		
 		return hasAce;
+	}
+	
+	public boolean mustHit()
+	{	
+		return (this.score <= 16);
+	}
+	
+	public void hit(List<String> deck)
+	{
+		 drawCard(deck.remove(deck.size() - 1));
 	}
 }
