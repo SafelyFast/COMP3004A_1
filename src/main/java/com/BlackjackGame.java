@@ -1,32 +1,17 @@
 package com;
 
 import com.Player;
-import com.Dealer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
+import com.Dealer;
+
 public class BlackjackGame {
-	
-	public static void main(String[] args)
-	{
-		System.out.println("Starting the game!");
-		
-		Scanner reader = new Scanner(System.in);  // Reading from System.in
-		char c;
-		while(true)
-		{
-			System.out.println("Enter either f or c: ");
-			c = reader.next().charAt(0); // Scans the next token of the input as an int.
-			if (c == 'f' || c == 'c')
-			{
-				break;
-			}
-			System.out.println("That was not one of the numbers requested!");
-		}
-		//once finished
-		reader.close();
-		System.out.println(c);
-	}
 	
 	//For victor:
 	//PLAYER is value 0
@@ -40,25 +25,80 @@ public class BlackjackGame {
 	public boolean gameOver;
 	public int victor;
 	
+	List<String> deck;
+	
 	public BlackjackGame()
 	{
 		this.player = new Player();
 		this.dealer = new Dealer();
 		this.gameOver = false;
 		this.victor = -1;
+		
+		this.deck = new ArrayList<String>();
+		
+		Scanner input = null;
+		
+		try {
+			input = new Scanner(new File("./src/main/resources/deck"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		while (input.hasNextLine())
+		{
+			deck.add(input.nextLine());
+		}
+		
+		input.close();
+		
+		Collections.shuffle(deck);
 	}
 	
-	public void isGameDone()
+	public void playOut()
 	{
+		if (this.dealer.hasBusted())
+		{
+			gameOver = true;
+			victor = PLAYER;
+			return;
+		}
+		
+		if (this.player.hasBusted())
+		{
+			gameOver = true;
+			victor = DEALER;
+			return;
+		}
+		
+		if (this.dealer.hasBlackjack())
+		{
+			gameOver = true;
+			victor = DEALER;
+			return;
+		}
+		
 		if (this.player.hasBlackjack())
 		{
 			gameOver = true;
-			if (this.dealer.hasBlackjack())
-			{
-				victor = DEALER;
-				return;
-			}
 			victor = PLAYER;
+		}
+		
+		if (this.player.score > this.dealer.score)
+		{
+			gameOver = true;
+			victor = PLAYER;
+		}
+		
+		if (this.dealer.score > this.player.score)
+		{
+			gameOver = true;
+			victor = DEALER;
+		}
+		
+		if (this.dealer.score == this.player.score)
+		{
+			gameOver = true;
+			victor = DEALER;
 		}
 	}
 }
