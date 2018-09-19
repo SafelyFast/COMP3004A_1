@@ -93,4 +93,9 @@ public class Player {
 		
 		return (hasAce && has10);
 	}
+	
+	public void hit(List<String> deck)
+	{
+		 drawCard(deck.remove(deck.size() - 1));
+	}
 }
