@@ -96,6 +96,6 @@ public class Player {
 	
 	public void hit(List<String> deck)
 	{
-		 drawCard(deck.remove(deck.size() - 1));
+		 drawCard(deck.remove(0));
 	}
 }
