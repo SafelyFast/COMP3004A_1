@@ -13,8 +13,8 @@ import com.BlackjackGame;
 
 public class BlackjackTest extends TestCase{
 	
-	public static int PLAYER = 0;
-	public static int DEALER = 1;
+	int DEALER = 1;
+	int PLAYER = 0;
 
 	public void testDraw()
 	{
@@ -267,17 +267,35 @@ public class BlackjackTest extends TestCase{
 		assertEquals(i, game.player.hand.size());
 	}
 	
-	public void testDealerMultipleHit()
+	public void testDealerMoreThanPlayer()
 	{
 		BlackjackGame game = new BlackjackGame();
-		int i = 0;
+	
+		game.dealer.drawCard("H10");
+		game.player.drawCard("H2");
 		
-		while(game.dealer.hasBusted() == false)
-		{
-			game.dealer.hit(game.deck);
-			i++;
-		}
+		game.playOut();
 		
-		assertEquals(i, game.dealer.hand.size());
+		assertEquals(DEALER, game.victor);
+		
+		game.player.clearHand();
+		
+		game.player.drawCard("H10");
+		
+		game.playOut();
+		
+		assertEquals(DEALER, game.victor);
+	}
+	
+	public void testPlayerMoreThanDealer()
+	{
+		BlackjackGame game = new BlackjackGame();
+		
+		game.dealer.drawCard("H2");
+		game.player.drawCard("H10");
+		
+		game.playOut();
+		
+		assertEquals(PLAYER, game.victor);
 	}
 }
